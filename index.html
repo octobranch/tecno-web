@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Quantum Web Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary: hsl(162, 100%, 58%);
+            --secondary: hsl(270, 100%, 60%);
+            --dark: hsl(240, 6%, 10%);
+            --neon-effect: drop-shadow(0 0 8px var(--primary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+
+        body {
+            background: var(--dark);
+            color: white;
+            font-family: 'Inter', system-ui;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Efecto de Partículas WebGL */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Hero Section con Animación 3D */
+        .hero-3d {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease-out;
+        }
+
+        .hero-text {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            filter: var(--neon-effect);
+        }
+
+        /* Tarjetas Holográficas */
+        .holographic-card {
+            background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.15));
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .holographic-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--primary),
+                transparent 30%
+            );
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Interface Fluidica */
+        .fluid-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--primary);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fluid-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary) 10%, transparent 50%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0.3;
+            transition: transform 0.6s ease-out;
+        }
+
+        .fluid-button:active::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+        }
+
+        /* Sistema de Grid Adaptativo */
+        .quantum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        /* Efectos de Scroll Avanzados */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px) rotateX(30deg);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .scroll-revealed {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-text {
+                font-size: 3rem;
+                text-align: center;
+            }
+            
+            .quantum-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .holographic-card:hover {
+                transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="container">
+        <section class="hero-3d">
+            <div class="hero-content">
+                <h1 class="hero-text">Diseño Cuántico para la Web</h1>
+                <button class="fluid-button">Explorar Tecnología</button>
+            </div>
+        </section>
+
+        <section class="quantum-grid">
+            <div class="holographic-card scroll-reveal">
+                <h3><i class="fas fa-atom"></i> WebGL Integrado</h3>
+                <p>Renderizado 3D acelerado por GPU</p>
+            </div>
+            <div class="holographic-card scroll-reveal">
+                <h3><i class="fas fa-fingerprint"></i> Autenticación Biométrica</h3>
+                <p>Soporte para Face ID y Touch ID</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Sistema de Partículas WebGL
+        const initParticles = () => {
+            const canvas = document.getElementById('particles-canvas');
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            const particles = new THREE.BufferGeometry();
+            const positions = [];
+            for(let i = 0; i < 5000; i++) {
+                positions.push(
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10
+                );
+            }
+            particles.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            
+            const material = new THREE.PointsMaterial({
+                size: 0.02,
+                color: new THREE.Color().setHSL(0.6, 0.8, 0.7),
+                transparent: true,
+                opacity: 0.6
+            });
+            
+            const particleSystem = new THREE.Points(particles, material);
+            scene.add(particleSystem);
+            camera.position.z = 5;
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                particleSystem.rotation.x += 0.0001;
+                particleSystem.rotation.y += 0.0001;
+                renderer.render(scene, camera);
+            };
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+        initParticles();
+
+        // Sistema de Scroll Avanzado
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('scroll-revealed');
+                }
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+
+        // Efecto de Orientación del Dispositivo
+        if(window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (e) => {
+                const cards = document.querySelectorAll('.holographic-card');
+                cards.forEach(card => {
+                    const x = (e.beta * 0.5) / 45;
+                    const y = (e.gamma * 0.5) / 45;
+                    card.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+                });
+            }, true);
+        }
+
+        // Optimización para Touch
+        let lastTap = 0;
+        document.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if(tapLength < 500 && tapLength > 0) {
+                e.target.dispatchEvent(new Event('dblclick'));
+            }
+            lastTap = currentTime;
+        });
+
+        // WebGL Fallback
+        if(!WebGLRenderingContext) {
+            document.getElementById('particles-canvas').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
