@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Quantum Web Development</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Desarrollo web cuántico de última generación con efectos 3D y realidad aumentada">
+    <meta name="keywords" content="quantum, web, desarrollo, 3D, realidad aumentada">
+    <title>Quantum Web Development | Innovación Cuántica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
     <style>
         :root {
             --primary: hsl(162, 100%, 58%);
             --secondary: hsl(270, 100%, 60%);
             --dark: hsl(240, 6%, 10%);
+            --darker: hsl(240, 6%, 5%);
             --neon-effect: drop-shadow(0 0 8px var(--primary));
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         * {
@@ -22,12 +27,76 @@
         }
 
         body {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--darker), var(--dark));
             color: white;
-            font-family: 'Inter', system-ui;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            line-height: 1.6;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+
+        /* Navegación Cuántica */
+        .quantum-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 20, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: var(--neon-effect);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
         }
 
         .container {
@@ -43,6 +112,8 @@
             position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
             pointer-events: none;
         }
@@ -54,16 +125,20 @@
             place-items: center;
             perspective: 1000px;
             overflow: hidden;
+            padding-top: 6rem;
         }
 
         .hero-content {
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.3s ease-out;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
         }
 
         .hero-text {
-            font-size: 4.5rem;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
@@ -71,21 +146,33 @@
             line-height: 1.1;
             text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
             filter: var(--neon-effect);
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Tarjetas Holográficas */
         .holographic-card {
-            background: linear-gradient(45deg, 
+            background: linear-gradient(135deg, 
                 rgba(255, 255, 255, 0.05),
                 rgba(255, 255, 255, 0.15));
             backdrop-filter: blur(20px) saturate(180%);
             border-radius: 24px;
-            padding: 2rem;
+            padding: 2.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
             transform: translateZ(0);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .holographic-card::before {
@@ -100,7 +187,39 @@
                 var(--primary),
                 transparent 30%
             );
-            animation: rotate 4s linear infinite;
+            animation: rotate 6s linear infinite;
+            z-index: -1;
+        }
+
+        .holographic-card::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: rgba(15, 15, 20, 0.9);
+            border-radius: 22px;
+            z-index: -1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: var(--neon-effect);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .card-content {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
         }
 
         @keyframes rotate {
@@ -115,9 +234,22 @@
             border-radius: 50px;
             color: var(--primary);
             font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            outline: none;
+            display: inline-block;
+            text-decoration: none;
+            margin: 0.5rem;
+        }
+
+        .fluid-button:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2);
         }
 
         .fluid-button::after {
@@ -130,7 +262,8 @@
             background: radial-gradient(circle, var(--primary) 10%, transparent 50%);
             transform: translate(-50%, -50%) scale(0);
             opacity: 0.3;
-            transition: transform 0.6s ease-out;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+            z-index: 0;
         }
 
         .fluid-button:active::after {
@@ -138,11 +271,30 @@
             opacity: 0;
         }
 
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .secondary-button {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .secondary-button:hover {
+            background: rgba(170, 0, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(170, 0, 255, 0.2);
+        }
+
         /* Sistema de Grid Adaptativo */
         .quantum-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+            gap: 2.5rem;
             margin: 4rem 0;
         }
 
@@ -158,112 +310,406 @@
             transform: translateY(0) rotateX(0);
         }
 
-        @media (max-width: 768px) {
-            .hero-text {
-                font-size: 3rem;
-                text-align: center;
+        /* Sección de características */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 5rem 0 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: var(--neon-effect);
+        }
+
+        /* Footer Cuántico */
+        .quantum-footer {
+            margin-top: 6rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 20, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
             }
             
+            .hero-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             .quantum-grid {
-                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .holographic-card {
+                padding: 1.8rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .quantum-nav {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
             }
         }
 
         @media (hover: hover) and (pointer: fine) {
             .holographic-card:hover {
-                transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+                transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             }
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .quantum-loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .quantum-loader::before,
+        .quantum-loader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--primary);
+            animation: spin 1.5s linear infinite;
+        }
+
+        .quantum-loader::after {
+            border-top-color: var(--secondary);
+            animation-delay: -0.75s;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <canvas id="particles-canvas"></canvas>
+    <div id="preloader">
+        <div class="quantum-loader"></div>
+    </div>
+
+    <nav class="quantum-nav">
+        <div class="logo">
+            <i class="fas fa-atom"></i>
+            <span>QuantumWeb</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">Tecnología</a>
+            <a href="#" class="nav-link">Soluciones</a>
+            <a href="#" class="nav-link">Clientes</a>
+            <a href="#" class="nav-link">Contacto</a>
+        </div>
+    </nav>
+
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
     <div class="container">
         <section class="hero-3d">
             <div class="hero-content">
-                <h1 class="hero-text">Diseño Cuántico para la Web</h1>
-                <button class="fluid-button">Explorar Tecnología</button>
+                <h1 class="hero-text">Desarrollo Web Cuántico</h1>
+                <p class="hero-subtitle">La próxima generación de experiencias web con tecnología cuántica, realidad aumentada y WebGL avanzado</p>
+                <div class="button-group">
+                    <button class="fluid-button">Explorar Tecnología</button>
+                    <button class="fluid-button secondary-button">Demo en Vivo</button>
+                </div>
             </div>
         </section>
 
+        <h2 class="section-title">Tecnologías Cuánticas</h2>
         <section class="quantum-grid">
             <div class="holographic-card scroll-reveal">
-                <h3><i class="fas fa-atom"></i> WebGL Integrado</h3>
-                <p>Renderizado 3D acelerado por GPU</p>
+                <div class="card-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <h3 class="card-title">WebGL Integrado</h3>
+                <p class="card-content">Renderizado 3D acelerado por GPU con soporte para realidad aumentada y experiencias inmersivas.</p>
+                <button class="fluid-button">Ver Demo</button>
             </div>
+            
             <div class="holographic-card scroll-reveal">
-                <h3><i class="fas fa-fingerprint"></i> Autenticación Biométrica</h3>
-                <p>Soporte para Face ID y Touch ID</p>
+                <div class="card-icon">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h3 class="card-title">Autenticación Biométrica</h3>
+                <p class="card-content">Soporte para Face ID, Touch ID y reconocimiento de voz para máxima seguridad.</p>
+                <button class="fluid-button">Más Información</button>
+            </div>
+            
+            <div class="holographic-card scroll-reveal">
+                <div class="card-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="card-title">IA Integrada</h3>
+                <p class="card-content">Sistemas de inteligencia artificial que aprenden y se adaptan a las preferencias del usuario.</p>
+                <button class="fluid-button">Ver Ejemplos</button>
+            </div>
+            
+            <div class="holographic-card scroll-reveal">
+                <div class="card-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="card-title">Rendimiento Cuántico</h3>
+                <p class="card-content">Algoritmos optimizados que ofrecen tiempos de carga instantáneos y máxima eficiencia.</p>
+                <button class="fluid-button">Ver Benchmarks</button>
+            </div>
+            
+            <div class="holographic-card scroll-reveal">
+                <div class="card-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="card-title">Seguridad Avanzada</h3>
+                <p class="card-content">Encriptación cuántica que protege tus datos contra amenazas futuras y actuales.</p>
+                <button class="fluid-button">Detalles Técnicos</button>
+            </div>
+            
+            <div class="holographic-card scroll-reveal">
+                <div class="card-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3 class="card-title">Sincronización en Tiempo Real</h3>
+                <p class="card-content">Comunicación instantánea entre dispositivos con latencia casi nula.</p>
+                <button class="fluid-button">Probar Demo</button>
             </div>
         </section>
     </div>
 
+    <footer class="quantum-footer">
+        <div class="container">
+            <div class="logo" style="font-size: 2rem;">
+                <i class="fas fa-atom"></i>
+                <span>QuantumWeb</span>
+            </div>
+            <p>La vanguardia del desarrollo web del mañana, hoy</p>
+            
+            <div class="footer-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#" class="nav-link">Términos de Servicio</a>
+                <a href="#" class="nav-link">Política de Privacidad</a>
+                <a href="#" class="nav-link">Documentación</a>
+                <a href="#" class="nav-link">Soporte</a>
+                <a href="#" class="nav-link">Carreras</a>
+            </div>
+            
+            <p class="copyright">© 2023 QuantumWeb Technologies. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
     <script>
-        // Sistema de Partículas WebGL
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 800);
+        });
+
+        // Sistema de Partículas WebGL optimizado
         const initParticles = () => {
             const canvas = document.getElementById('particles-canvas');
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            if(!canvas) return;
             
-            const particles = new THREE.BufferGeometry();
-            const positions = [];
-            for(let i = 0; i < 5000; i++) {
-                positions.push(
-                    (Math.random() - 0.5) * 10,
-                    (Math.random() - 0.5) * 10,
-                    (Math.random() - 0.5) * 10
-                );
+            // Comprobar compatibilidad con WebGL
+            if(!WebGLRenderingContext) {
+                canvas.style.display = 'none';
+                return;
             }
-            particles.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
             
-            const material = new THREE.PointsMaterial({
-                size: 0.02,
-                color: new THREE.Color().setHSL(0.6, 0.8, 0.7),
-                transparent: true,
-                opacity: 0.6
-            });
-            
-            const particleSystem = new THREE.Points(particles, material);
-            scene.add(particleSystem);
-            camera.position.z = 5;
-
-            const animate = () => {
-                requestAnimationFrame(animate);
-                particleSystem.rotation.x += 0.0001;
-                particleSystem.rotation.y += 0.0001;
-                renderer.render(scene, camera);
-            };
-            animate();
-            
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
+            try {
+                const renderer = new THREE.WebGLRenderer({ 
+                    canvas, 
+                    alpha: true,
+                    antialias: true
+                });
                 renderer.setSize(window.innerWidth, window.innerHeight);
-            });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                // Geometría optimizada
+                const particlesGeometry = new THREE.BufferGeometry();
+                const count = 2000; // Reducido para mejor rendimiento
+                const positions = new Float32Array(count * 3);
+                
+                for(let i = 0; i < count * 3; i += 3) {
+                    positions[i] = (Math.random() - 0.5) * 10;
+                    positions[i+1] = (Math.random() - 0.5) * 10;
+                    positions[i+2] = (Math.random() - 0.5) * 10;
+                }
+                
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                
+                // Material optimizado
+                const particlesMaterial = new THREE.PointsMaterial({
+                    size: 0.03,
+                    color: new THREE.Color().setHSL(0.6, 0.8, 0.7),
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+                scene.add(particles);
+                
+                // Animación optimizada
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    
+                    particles.rotation.x += 0.0005;
+                    particles.rotation.y += 0.0005;
+                    
+                    renderer.render(scene, camera);
+                };
+                
+                animate();
+                
+                // Manejo de redimensionamiento
+                let resizeTimeout;
+                const handleResize = () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        camera.aspect = window.innerWidth / window.innerHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                    }, 200);
+                };
+                
+                window.addEventListener('resize', handleResize);
+                
+                // Limpiar al desmontar
+                return () => {
+                    window.removeEventListener('resize', handleResize);
+                    renderer.dispose();
+                };
+                
+            } catch (e) {
+                console.error('Error initializing WebGL:', e);
+                canvas.style.display = 'none';
+            }
         };
+        
         initParticles();
 
-        // Sistema de Scroll Avanzado
+        // Sistema de Scroll Avanzado mejorado
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
                     entry.target.classList.add('scroll-revealed');
+                    // Opcional: dejar de observar después de la animación
+                    // scrollObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.25 });
+        }, { 
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-        document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            scrollObserver.observe(el);
+        });
 
-        // Efecto de Orientación del Dispositivo
+        // Efecto de Orientación del Dispositivo (optimizado)
         if(window.DeviceOrientationEvent) {
+            let lastUpdate = 0;
+            const throttleDelay = 100; // ms
+            
             window.addEventListener('deviceorientation', (e) => {
+                const now = Date.now();
+                if (now - lastUpdate < throttleDelay) return;
+                lastUpdate = now;
+                
                 const cards = document.querySelectorAll('.holographic-card');
+                const x = (e.beta || 0) * 0.5 / 45;
+                const y = (e.gamma || 0) * 0.5 / 45;
+                
                 cards.forEach(card => {
-                    const x = (e.beta * 0.5) / 45;
-                    const y = (e.gamma * 0.5) / 45;
-                    card.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+                    card.style.transform = `rotateX(${x}deg) rotateY(${y}deg) translateZ(10px)`;
                 });
             }, true);
         }
@@ -274,14 +720,40 @@
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTap;
             if(tapLength < 500 && tapLength > 0) {
-                e.target.dispatchEvent(new Event('dblclick'));
+                // Simular doble clic
+                const clickEvent = new MouseEvent('dblclick', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                });
+                e.target.dispatchEvent(clickEvent);
             }
             lastTap = currentTime;
         });
 
-        // WebGL Fallback
-        if(!WebGLRenderingContext) {
-            document.getElementById('particles-canvas').style.display = 'none';
+        // Mejora de accesibilidad para botones
+        document.querySelectorAll('.fluid-button').forEach(button => {
+            button.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    button.click();
+                }
+            });
+        });
+
+        // Efecto de movimiento en el hero con el cursor
+        const heroContent = document.querySelector('.hero-content');
+        if(heroContent) {
+            document.addEventListener('mousemove', (e) => {
+                if(window.innerWidth > 992) {
+                    const x = (window.innerWidth / 2 - e.clientX) / 30;
+                    const y = (window.innerHeight / 2 - e.clientY) / 30;
+                    heroContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+                }
+            });
+            
+            document.addEventListener('mouseleave', () => {
+                heroContent.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            });
         }
     </script>
 </body>
